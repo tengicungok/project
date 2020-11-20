@@ -1,0 +1,22 @@
+---
+- name: tao loopback
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Set loopback IPv4 address
+      ios_l3_interface:
+        name: "{{ item.name }}"
+		ipv4: "{{ item.name }}"
+      with_items:
+        - { name: "loopback_0" , ipv4: "192.168.1.1/24"}
+        - { name: "loopback_1" , ipv4: "192.168.2.1/24"}
+        - { name: "loopback_2" , ipv4: "192.168.3.1/24"}
+
+    - name: Show loopback
+      ios_command:
+        commands:
+          - show interface loopback
+      register: show_vlan
+
+    - debug: var=show_vlan.stdout_lines
