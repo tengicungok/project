@@ -16,7 +16,7 @@
     - name: Show loopback
       ios_command:
         commands:
-          - show interface loopback
+          - show ip interface
       register: show_vlan
 
     - debug: var=show_vlan.stdout_lines
